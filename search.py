@@ -125,27 +125,14 @@ def depth_first_graph_search(problem):
 
 def branch_and_bound_graph_search(problem):
     """Branch and bound algorythm"""
-    return graph_search(problem, PriorityQueue())
+    return graph_search(problem, PriorityQueue(problem, False))
 
 # ______________________________________________________________________________
 ## Informed Search algorithms
 
-def graph_search_informed(problem, fringe):
-    """Search through the successors of a problem to find a goal.
-    The argument fringe should be an empty queue.
-    If two paths reach a state, only use the best one. [Fig. 3.18]"""
-    closed = {}
-    fringe.append(Node(problem.initial))
-    while fringe:
-        node = fringe.pop()
-        if problem.goal_test(node.state):
-            return node
-        if node.state not in closed:
-            closed[node.state] = True
-            fringe.extend(node.expand(problem))
-    return None
-
-
+def branch_and_bound_heuristic_graph_search(problem):
+    """Branch and bound algoryth with heuristic"""
+    return graph_search(problem, PriorityQueue(problem, True))
 
 # _____________________________________________________________________________
 # The remainder of this file implements examples for the search algorithms.

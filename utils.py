@@ -1,4 +1,4 @@
-
+import math
 #______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
 
@@ -550,9 +550,11 @@ class FIFOQueue(Queue):
 Fig = {}
 
 class PriorityQueue(Queue):
-    def __init__(self):
+    def __init__(self, problem, informed):
         self.A = []
         self.start = 0
+        self.problem = problem
+        self.informed = informed
 
     def append(self, item):
         self.A.append(item)
@@ -562,7 +564,10 @@ class PriorityQueue(Queue):
 
     def extend(self, items):
         self.A.extend(items)
-        self.A.sort(key=lambda node : (node.path_cost))
+        if (self.informed):
+            self.A.sort(key=lambda node : (node.path_cost)+self.problem.h(node))
+        else:
+            self.A.sort(key=lambda node : (node.path_cost))
 
     def pop(self):
         e = self.A[self.start]
